@@ -1,0 +1,160 @@
+<h2>Form</h2>
+<div class="form-container">
+  <div class="form-container2">
+    <form (ngSubmit)="onSubmit()" #f="ngForm" class="form-style">
+      <div
+        id="user-data"
+        ngModelGroup="userData"
+        #userData="ngModelGroup">
+
+        <div style="margin-top: 20px">
+          &nbsp;&nbsp;<label for="firstname">First Name</label>&nbsp;
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="text"
+              id="firstname"
+              ngModel
+              name="firstname"
+              maxlength="20"
+              required
+              #firstName="ngModel"
+            >
+          </mat-form-field>
+          <br>
+          <span
+                *ngIf="firstName.touched && firstName.value === ''">
+          *You must enter your First Name
+            </span>
+
+        </div>
+        <div>
+          &nbsp; <label for="lastname">Last Name</label>&nbsp;
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="text"
+              id="lastname"
+              ngModel
+              name="lastname"
+              maxlength="30"
+              required
+              #lastName="ngModel"
+            >
+          </mat-form-field>
+          <br>
+          &nbsp; <span
+                       *ngIf="lastName.touched && lastName.value === '' ">
+          *You must enter your Last Name
+            </span>
+
+        </div>
+        <div>
+          &nbsp; <label for="email">Email</label>&nbsp;
+          <mat-form-field appearance="fill">
+            <input
+              matInput
+              type="email"
+              id="email"
+              ngModel
+              name="email"
+              required
+              email
+              #email="ngModel"
+              (change)="isValidEmail(email.value)"
+            >
+          </mat-form-field>
+          <br>
+          <span
+                *ngIf="email.touched && email.value === '' && email.update">
+              *You must enter your Email
+            </span>
+
+          <span
+                *ngIf="!isValidEmailAfterTyping && email.value !== ''">
+              *Invalid Email
+          </span>
+          <br>
+          <div>
+            &nbsp;&nbsp;<label for="gender">Gender</label>&nbsp;
+            <select
+              id="gender"
+              name="gender"
+              required
+              ngModel>
+              <option value="" disabled selected>Select your gender</option>
+              <option
+                [value]="gender"
+                *ngFor="let gender of genders"
+              >{{gender}}
+              </option>
+            </select>
+          </div>
+          <br>
+          <div>
+            &nbsp;&nbsp;<label for="hobby">Hobby</label>&nbsp;
+            <br>
+            <select
+              id="hobby"
+              required
+              name="hobby"
+              multiple
+              ngModel
+              style="margin-left: 60px">
+              <option
+                value="{{hobby.label}}"
+                *ngFor="let hobby of hobbies">
+                {{hobby.code}}.
+                {{hobby.label}}
+              </option>
+            </select>
+            <p style="margin-left: 10px">
+              You can choose more than one hobby. Hold down the Ctrl (Windows) or Command (Mac) button to select
+              multiple options.
+            </p>
+          </div>
+          <div>
+            <section>
+              <mat-checkbox
+                id="conditions"
+                name="conditions"
+                color="primary"
+                required
+                ngModel
+                #conditions
+                (click)="onCheckConditions($event)">
+                <a routerLink="/conditions" target="_blank">I agree with the terms of use.</a>
+              </mat-checkbox>
+            </section>
+            <p id="p-checkbox"
+               *ngIf="!conditions._onTouched()&& !conditions.checked ">
+              <b>*</b> You need to confirm our conditions!
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="!f.valid"
+        >
+          Submit
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!--<div *ngIf="submitted">-->
+<!--  <div>-->
+<!--    <p>First Name - {{ user.firstname }}</p>-->
+<!--    <p>Last Name - {{ user.lastname }}</p>-->
+<!--    <p>Mail - {{ user.email }}</p>-->
+<!--    <p>Gender - {{ user.gender }}</p>-->
+<!--    <p>Hobby/Hobbies - {{ user.hobby }}</p>-->
+<!--    <p>Conditions - {{ user.conditions }}</p>-->
+<!--  </div>-->
+<!--</div>-->

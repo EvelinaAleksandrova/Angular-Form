@@ -1,0 +1,34 @@
+[
+  {
+    "code": 1,
+    "label": "Reading books"
+  },
+  {
+    "code": 2,
+    "label": "Painting"
+  },
+  {
+    "code": 3,
+    "label": "Mountain climbing"
+  },
+  {
+    "code": 4,
+    "label": "Cooking"
+  },
+  {
+    "code": 5,
+    "label": "Running"
+  },
+  {
+    "code": 6,
+    "label": "Walk in the park"
+  },
+  {
+    "code": 7,
+    "label": "Gardening"
+  },
+  {
+    "code": 8,
+    "label": "Playing the piano"
+  }
+]
