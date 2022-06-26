@@ -78,7 +78,7 @@
               required
               ngModel>
               <mat-option
-                [value]="gender.label"
+                value="{{gender.code}}"
                 *ngFor="let gender of genders">
                 {{gender.code}}.
                 {{gender.label}}
@@ -99,7 +99,7 @@
               multiple
               ngModel>
               <mat-option
-                value="{{hobby.label}}"
+                value="{{hobby.code}}"
                 *ngFor="let hobby of hobbies">
                 {{hobby.code}}.
                 {{hobby.label}}
