@@ -4,11 +4,10 @@
     <form (ngSubmit)="onSubmit()" #f="ngForm" class="form-style">
       <div
         id="user-data"
-        ngModelGroup="userData"
-        #userData="ngModelGroup">
-
+        ngModelGroup="userData">
         <div style="margin-top: 20px">
-          &nbsp;&nbsp;<label for="firstname">First Name</label>&nbsp;
+          <b>*</b>
+          <label for="firstname"> &nbsp;First Name &nbsp;</label>
           <mat-form-field appearance="fill">
             <input
               matInput
@@ -18,17 +17,16 @@
               name="firstname"
               maxlength="20"
               required
-              #firstName="ngModel"
-            >
+              #firstName="ngModel">
+            <mat-error
+              *ngIf="firstName.touched && firstName.value === ''">
+              *You must enter your First Name
+            </mat-error>
           </mat-form-field>
-          <br>
-          <span
-                *ngIf="firstName.touched && firstName.value === ''">
-          *You must enter your First Name
-            </span>
-
         </div>
+        <br>
         <div>
+          <b>*</b>
           &nbsp; <label for="lastname">Last Name</label>&nbsp;
           <mat-form-field appearance="fill">
             <input
@@ -39,21 +37,21 @@
               name="lastname"
               maxlength="30"
               required
-              #lastName="ngModel"
-            >
+              #lastName="ngModel">
+            <mat-error
+              *ngIf="lastName.touched && lastName.value === '' ">
+              *You must enter your Last Name
+            </mat-error>
           </mat-form-field>
-          <br>
-          &nbsp; <span
-                       *ngIf="lastName.touched && lastName.value === '' ">
-          *You must enter your Last Name
-            </span>
-
         </div>
+        <br>
         <div>
-          &nbsp; <label for="email">Email</label>&nbsp;
+          <b>*</b>
+          &nbsp; <label for="email">Email&nbsp;&nbsp;&nbsp;</label>&nbsp;
           <mat-form-field appearance="fill">
             <input
               matInput
+              placeholder="exampleEmail@gmail.com"
               type="email"
               id="email"
               ngModel
@@ -61,76 +59,69 @@
               required
               email
               #email="ngModel"
-              (change)="isValidEmail(email.value)"
-            >
-          </mat-form-field>
-          <br>
-          <span
-                *ngIf="email.touched && email.value === '' && email.update">
-              *You must enter your Email
-            </span>
-
-          <span
-                *ngIf="!isValidEmailAfterTyping && email.value !== ''">
+              pattern="[\w+\.]+@([\w-]+\.)+[\w-]{2,4}">
+            <mat-error
+              *ngIf="email.touched && email.invalid">
               *Invalid Email
-          </span>
-          <br>
-          <div>
-            &nbsp;&nbsp;<label for="gender">Gender</label>&nbsp;
-            <select
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <br>
+        <div>
+          <b>*</b>
+          &nbsp;&nbsp;<label for="gender">Gender</label>&nbsp;
+          <mat-form-field appearance="fill" hideRequiredMarker>
+            <mat-label>Select your gender</mat-label>
+            <mat-select
               id="gender"
               name="gender"
               required
               ngModel>
-              <option value="" disabled selected>Select your gender</option>
-              <option
-                [value]="gender"
-                *ngFor="let gender of genders"
-              >{{gender}}
-              </option>
-            </select>
-          </div>
-          <br>
-          <div>
-            &nbsp;&nbsp;<label for="hobby">Hobby</label>&nbsp;
-            <br>
-            <select
+              <mat-option
+                [value]="gender.label"
+                *ngFor="let gender of genders">
+                {{gender.code}}.
+                {{gender.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <br>
+        <div>
+          <b>*</b>
+          &nbsp;&nbsp;<label for="hobby">Hobby&nbsp;</label>&nbsp;
+          <mat-form-field appearance="fill" hideRequiredMarker>
+            <mat-label>Select your hobbies</mat-label>
+            <mat-select
               id="hobby"
               required
               name="hobby"
               multiple
-              ngModel
-              style="margin-left: 60px">
-              <option
+              ngModel>
+              <mat-option
                 value="{{hobby.label}}"
                 *ngFor="let hobby of hobbies">
                 {{hobby.code}}.
                 {{hobby.label}}
-              </option>
-            </select>
-            <p style="margin-left: 10px">
-              You can choose more than one hobby. Hold down the Ctrl (Windows) or Command (Mac) button to select
-              multiple options.
-            </p>
-          </div>
-          <div>
-            <section>
-              <mat-checkbox
-                id="conditions"
-                name="conditions"
-                color="primary"
-                required
-                ngModel
-                #conditions
-                (click)="onCheckConditions($event)">
-                <a routerLink="/conditions" target="_blank">I agree with the terms of use.</a>
-              </mat-checkbox>
-            </section>
-            <p id="p-checkbox"
-               *ngIf="!conditions._onTouched()&& !conditions.checked ">
-              <b>*</b> You need to confirm our conditions!
-            </p>
-          </div>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <br>
+        <div>
+          <section>
+            <mat-checkbox
+              id="conditions"
+              name="conditions"
+              color="primary"
+              required
+              ngModel>
+              <a routerLink="/conditions" target="_blank">I agree with the terms of use.</a>
+            </mat-checkbox>
+          </section>
+          <mat-hint id="p-checkbox">
+            <b>*</b> You need to confirm our conditions!
+          </mat-hint>
         </div>
       </div>
       <div class="btn-container">
@@ -138,23 +129,10 @@
           mat-raised-button
           type="submit"
           color="primary"
-          [disabled]="!f.valid"
-        >
+          [disabled]="!f.valid">
           Submit
         </button>
       </div>
-
     </form>
   </div>
 </div>
-
-<!--<div *ngIf="submitted">-->
-<!--  <div>-->
-<!--    <p>First Name - {{ user.firstname }}</p>-->
-<!--    <p>Last Name - {{ user.lastname }}</p>-->
-<!--    <p>Mail - {{ user.email }}</p>-->
-<!--    <p>Gender - {{ user.gender }}</p>-->
-<!--    <p>Hobby/Hobbies - {{ user.hobby }}</p>-->
-<!--    <p>Conditions - {{ user.conditions }}</p>-->
-<!--  </div>-->
-<!--</div>-->
